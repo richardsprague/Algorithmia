@@ -1,20 +1,11 @@
 __author__ = 'sprague'
 
-
 from Algorithmia import *
 
 
-#findNumber = input("What number would you like to factor?")
-
-
-findNumber=197329798 # add one to get a prime number
 factoring = Algorithmia(user="kenny",algo="factor")
-factorResult = factoring.result(findNumber)
-factors=factorResult["result"]
-print("factors for ",findNumber,"are:",factorResult["result"])
-for i in factors:
-    print("Factor = ",i)
-
+factors = factoring.result(144)
+print(factors)
 
 
 print("\n\nAutoTagGithub:")

@@ -9,10 +9,10 @@
 #import "ALGConnection.h"
 #import "ALGConnectionProtocol.h"
 
-const NSString *ALGAuthorization = @"3944281388ec41b5b922aadac79a2645";
-const NSString *ALGUser = @"kenny";
-const NSString *ALGAlgo = @"factor";
-const NSString *ALGURL = @"http://api.algorithmia.com/api/kenny/factor";
+NSString * const ALGAuthorization = @"3944281388ec41b5b922aadac79a2645";
+NSString * const ALGUser = @"kenny";
+NSString * const ALGAlgo = @"factor";
+NSString * const ALGURL = @"http://api.algorithmia.com/api/kenny/factor";
 
 @interface ALGConnection()<NSURLConnectionDelegate>
 
