@@ -41,7 +41,7 @@ NSString * const kALGAuthorizationID = @"3944281388ec41b5b922aadac79a2645";
         bool resultP = [jsonResults boolValue];
         self.AGResultsTextLabel.text=@"not yet";
         
-        self.AGResultsTextLabel.text = resultP ? @"Yes,it's prime" : @"No, not prime";
+        self.AGResultsTextLabel.text = resultP ? @"Yes, it's prime" : @"No, not prime";
     }
 }
 
@@ -52,7 +52,7 @@ NSString * const kALGAuthorizationID = @"3944281388ec41b5b922aadac79a2645";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[url standardizedURL]];
     NSString *postData = [[NSString alloc] initWithString:input];
     
-    self.AGResultsTextLabel.text = @"Checking with Algorithmia...";
+    self.AGResultsTextLabel.text = @"Wait...";
     
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
