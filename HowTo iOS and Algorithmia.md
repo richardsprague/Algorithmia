@@ -1,30 +1,33 @@
 # Programming Algorithmia with iOS
 
-The same easy Algorithmia API calls that are possible
-with Python, Java, Scala, and others, is easy for iOS programming too.
+The same easy Algorithmia API that works with
+ Python, Java, Scala, and others, is easy for iOS programming too.
 
-This short lesson assumes you have a basic knowledge of iOS programming:
-enough to write a simple single-view app using the Storyboard. To run
+This short lesson assumes you have [a basic knowledge of iOS programming:
+enough to write a simple single-view app using the Storyboard. (If not, start with [Apple's documentation here](https://developer.apple.com/library/ios/referencelibrary/GettingStarted/RoadMapiOS/)). To run
 this example, all you need is a Mac and a copy of Apple's (free) Xcode development
 environment. If you want to run your app on an iPhone or iPad, or if
 you intend to ship your app in the iTunes App Store, you'll
 also need a $100 subscription to Apple's developer program, but that
 won't be necessary for this short example.
 
-Fortunately, iOS already provides several powerful networking object classes that make it easy to POST http commands to the Algorithmia API:
+The Algorithmia API works through simple http POST commands. Fortunately, iOS already provides several powerful networking object classes that make that very easy:
 
-```NSMutableURLRequest``` sets up the HTTP request with some straightforward and obvious methods, like ```setHTTPMethod:@"POST"``` to tell the server that you want to post some data.
+* ```NSMutableURLRequest``` sets up the HTTP request with some straightforward and obvious methods, like ```setHTTPMethod:@"POST"``` to tell the server that you want to post some data.
 
-```NSURLSession``` is a powerful class that lets you download the content via HTTP, including in the background or even while the application is suspended. Fortunately, the methods to control the download behavior are pretty straightforward.
+* ```NSURLSession``` is a powerful class that lets you download the content via HTTP, including in the background or even while the application is suspended. Fortunately, the methods to control the download behavior are pretty straightforward.
 
-```NSURLDataTask``` is a related class specifically for getting data via HTTP. Pass it an instance of ```NSURLSession```,  a ```NSMutableURLRequest``` and handler that describes what to do when it receives the a response from the server.
+* ```NSURLDataTask``` is a related class specifically for getting data via HTTP. Pass it an instance of ```NSURLSession```,  a ```NSMutableURLRequest``` and handler that describes what to do when it receives the a response from the server.
 
- Finally, ```NSJSONSerialization``` is a handy class that will convert between JSON and native iOS dictionary or array types. Read [Apple's class reference documentation](https://developer.apple.com/library/ios/documentation/Foundation/Reference/NSJSONSerialization_Class/index.html) to see how much work this will save you!
+* Finally, ```NSJSONSerialization``` is a handy class that will convert between JSON and native iOS dictionary or array types. Read [Apple's class reference documentation](https://developer.apple.com/library/ios/documentation/Foundation/Reference/NSJSONSerialization_Class/index.html) to see how much work this will save you!
 
  ---
  # Example: POST a string to the Algorithmia API
 
  The best way to understand is with a simple example. Here's a short program to send a string representation of an integer to the Algorithmia ```isPrime``` API, to find whether an input number is prime or not.
+
+ Here's the opening screen:
+ ![isPrime Algorithmia Example](https://github.com/richardsprague/Algorithmia/blob/master/images/ScreenShotIsPrimeYes.png?raw=true)
 
  First a couple of housekeeping declarations. You'll need the URL for the algorithm you want to use, and a valid Algorithmia authorization ID (which you can find in your profile):
 
