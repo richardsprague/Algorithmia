@@ -1,9 +1,9 @@
 # Programming Algorithmia with iOS
 
-The same easy Algorithmia API that works with
+The same simple Algorithmia API that works with
  Python, Java, Scala, and others, is easy for iOS programming too.
 
-This short lesson assumes you have [a basic knowledge of iOS programming:
+This short lesson assumes you have a basic knowledge of iOS programming:
 enough to write a simple single-view app using the Storyboard. (If not, start with [Apple's documentation here](https://developer.apple.com/library/ios/referencelibrary/GettingStarted/RoadMapiOS/)). To run
 this example, all you need is a Mac and a copy of Apple's (free) Xcode development
 environment. If you want to run your app on an iPhone or iPad, or if
@@ -27,9 +27,12 @@ The Algorithmia API works through simple http POST commands. Fortunately, iOS al
  The best way to understand is with a simple example. Here's a short program to send a string representation of an integer to the Algorithmia ```isPrime``` API, to find whether an input number is prime or not.
 
  Here's the opening screen:
- ![isPrime Algorithmia Example](https://github.com/richardsprague/Algorithmia/blob/master/images/ScreenShotIsPrimeYes.png?raw=true)
 
- First a couple of housekeeping declarations. You'll need the URL for the algorithm you want to use, and a valid Algorithmia authorization ID (which you can find in your profile):
+ ![isPrime Algorithmia Example](https://github.com/richardsprague/Algorithmia/blob/master/images/ScreenShotIsPrimeYesS.png?raw=true)
+
+ Just a normal text input box (```UITextEdit```), a button you push to submit the text to the server, and a few labels to show what's happening. That's all there is to the UI, and you should be able to whip this up quickly yourself in Storyboard.
+
+ For the guts of the app, let's start with a couple of housekeeping declarations. You'll need the URL for the algorithm you want to use, and a valid Algorithmia authorization ID (which you can find in your profile):
 
  ```objc
 
@@ -86,7 +89,7 @@ NSString * const kALGAuthorizationID = @"<enter your Algorithmia Authorization I
 ```
 That's it!  All the networking code you need to access the Algorithmia API is right there.
 
- In a simple app like this one, you could substitute the call to ```processAlgorithmiaReply``` with inline code. Separating it like this just makes the the method shorter and easier to understand. Here's how to process that reply:
+ In a simple app like this one, you could substitute the call to ```processAlgorithmiaReply``` with inline code. Separating it like this just makes the methods shorter and easier to understand. Here's how to process that reply:
 
 ```objc
 // When the Algorithmia server successfully replies, this method fires with the JSON returned.
@@ -110,3 +113,9 @@ That's it!  All the networking code you need to access the Algorithmia API is ri
 ```
 
 In this case, we simply change the text in a label, but of course now that the JSON is a regular ```NSDictionary``` object, you can handle it any way you like.
+
+The above two methods are the only Algorithmia-specific code. The rest of the app -- updating the label text, handling the button submit -- will be easy to anyone who has ever developed an iOS app in Storyboard. You can also download the entire, working app [here](https://github.com/richardsprague/Algorithmia/tree/master/AlgorithmiaExample1).
+
+Although this example may seem trivial, you'll find there are many, much more powerful and interesting algorithms that work the same way: pass a single string (or number) to an algorithm, and get a back a single number.  Explore the Algorithmia Algorithms for many more examples.
+
+Of course, if you need to exchange more complicated information, that's easy too with  JSON. Our next post will give an example of that: face detection on a photo from your camera roll.
