@@ -26,13 +26,12 @@ NSString * const kALGAuthorizationID = @"3944281388ec41b5b922aadac79a2645";
    
 }
 
-- (void) didReceiveJSON: (NSDictionary *) json {
+// When the Algorithmia server successfully replies, this method fires with the JSON returned.
+- (void) processAlgorithmiaReply: (NSDictionary *) json {
     
     NSString *msg = [json objectForKey:@"result"];
     if (!msg){
         NSLog(@"No JSON result returned to didReceiveJSON: %@",json);
-        
-        
     }
     else
         
@@ -43,10 +42,7 @@ NSString * const kALGAuthorizationID = @"3944281388ec41b5b922aadac79a2645";
         self.AGResultsTextLabel.text=@"not yet";
         
         self.AGResultsTextLabel.text = resultP ? @"Yes,it's prime" : @"No, not prime";
-        
-     //   self.AGResultsTextLabel.text = [[NSString alloc] initWithFormat:@"[%@]",jsonResults];
     }
-    
 }
 
 - (void) sendInputToAlgorithmia:(NSString *)input {
@@ -75,9 +71,9 @@ NSString * const kALGAuthorizationID = @"3944281388ec41b5b922aadac79a2645";
             //NSLog(@"%@", json);
             //The JSON is parsed into standard Cocoa classes such as NSArray, NSDictionary, NSString and NSNumber:
             NSLog(@"The result from Algorithmia was %@\n", json[@"result"]);
-            self.AGResultsTextLabel.text = [[json objectForKey:@"result"] boolValue] ? @"Yes, prime" : @"No, not prime";
+       //     self.AGResultsTextLabel.text = [[json objectForKey:@"result"] boolValue] ? @"Yes, prime" : @"No, not prime";
             
-          //  [self didReceiveJSON:json];
+            [self processAlgorithmiaReply:json];
             
         } else {
             NSLog(@"NSURLSession error response code = %ld",(long)[(NSHTTPURLResponse*)response statusCode]);

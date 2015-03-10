@@ -23,13 +23,27 @@ Fortunately, iOS already provides several powerful networking object classes tha
 
  ---
  # Example: POST a string to the Algorithmia API
- The best way to understand is with a simple example. The following method will send the NSString ```input``` to Algorithmia and call the method ```didReceiveJSON``` if the server replies with the answer.
+
+ The best way to understand is with a simple example. Here's a short program to send a string representation of an integer to the Algorithmia ```isPrime``` API, to find whether an input number is prime or not.
+
+ First a couple of housekeeping declarations. You'll need the URL for the algorithm you want to use, and a valid Algorithmia authorization ID (which you can find in your profile):
+
+ ```objc
+
+ NSString * const kALGAlgorithmURL = @"http://api.algorithmia.com/api/diego/isPrime";
+NSString * const kALGAuthorizationID = @"<enter your Algorithmia Authorization ID here";
+
+ ```
+ Now for the most important method, the HTTP POST to Algorithmia's API.
+
+
+  The following method will send the NSString ```input``` to Algorithmia and call the method ```processAlgorithmiaReply``` if the server replies with the answer.
 
 ```objc
 - (void) sendInputToAlgorithmia:(NSString *)input {
 
     // create a url object for the API you want to call.
-    NSURL *url  = [NSURL URLWithString:@"http://api.algorithmia.com/api/diego/isPrime"];
+    NSURL *url  = [NSURL URLWithString:@kALGAlgorithmURL];
 
     // set up the http request object for that URL.
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[url standardizedURL]];
@@ -54,9 +68,9 @@ Fortunately, iOS already provides several powerful networking object classes tha
             //NSLog(@"%@", json);
             //The JSON is parsed into standard Cocoa classes such as NSArray, NSDictionary, NSString and NSNumber:
             NSLog(@"The result from Algorithmia was %@\n", json[@"result"]);
-            self.AGResultsTextLabel.text = [[json objectForKey:@"result"] boolValue] ? @"Yes, prime" : @"No, not prime";
 
-          //  [self didReceiveJSON:json];
+           // we have a valid reply, with valid JSON, so send it to the processing method
+           [self processAlgorithmiaReply:json];
 
         } else {
             NSLog(@"NSURLSession error response code = %ld",(long)[(NSHTTPURLResponse*)response statusCode]);
@@ -68,3 +82,28 @@ Fortunately, iOS already provides several powerful networking object classes tha
 }
 ```
 That's it!  All the networking code you need to access the Algorithmia API is right there.
+
+ In a simple app like this one, you could substitute the call to ```processAlgorithmiaReply``` with inline code. Separating it like this just makes the the method shorter and easier to understand. Here's how to process that reply:
+
+```objc
+// When the Algorithmia server successfully replies, this method fires with the JSON returned.
+- (void) processAlgorithmiaReply: (NSDictionary *) json {
+
+    NSString *msg = [json objectForKey:@"result"];
+    if (!msg){
+        NSLog(@"No JSON result returned to didReceiveJSON: %@",json);
+    }
+    else
+
+    { NSNumber *jsonResults = [json objectForKey:@"result"];
+        NSLog(@"results = %@",jsonResults);
+
+        bool resultP = [jsonResults boolValue];
+        self.AGResultsTextLabel.text=@"not yet";
+
+        self.AGResultsTextLabel.text = resultP ? @"Yes,it's prime" : @"No, not prime";
+    }
+}
+```
+
+In this case, we simply change the text in a label, but of course now that the JSON is a regular ```NSDictionary``` object, you can handle it any way you like.
